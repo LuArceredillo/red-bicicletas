@@ -8,6 +8,8 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     zoomOffset: -1,
     accessToken: 'pk.eyJ1IjoibHVhcmNlcmVkaWxsbyIsImEiOiJja2VwMXJ2cW4wZWZ4MnJvaWp3dWlkeGxiIn0.VbPiHUbHTGiBgSnQQ9hZRA'
 }).addTo(mymap);
+L.marker([-34.6112424, -58.3961497]).addTo(mymap);
+L.marker([-34.6212424, -58.4061497]).addTo(mymap);
 
 $.ajax({
     dataType:"json",
