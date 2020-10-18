@@ -60,7 +60,7 @@ describe("Bicicleta.add", () => {
     });
   });
 });
-
+/*
 describe("Bicicleta.findByCode", () => {
   it("Debe devolver la bici con code 1", (done) => {
     //chequeo la precondicion
@@ -69,7 +69,7 @@ describe("Bicicleta.findByCode", () => {
         done();
       });
       var a = new Bicicleta({
-        code: 1,
+        id: 1,
         color: "rojo",
         modelo: "29",
         ubicacion: [-34.6, -58.38],
@@ -97,6 +97,7 @@ describe("Bicicleta.findByCode", () => {
    
   });
 });
+*/
 /*
 beforeEach( () => {
     Bicicleta.allBicis = []

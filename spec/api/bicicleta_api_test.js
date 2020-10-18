@@ -80,7 +80,7 @@ describe('Test Bicicleta', () => {
         color: "azul",
         modelo: "Deportiva"
       }
-      
+
       axios.put(`${URL}/${bici.code}/update`, update, {
           headers: headersR
         })
