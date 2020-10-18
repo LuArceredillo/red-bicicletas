@@ -80,12 +80,13 @@ describe('Test Bicicleta', () => {
         color: "azul",
         modelo: "Deportiva"
       }
-      axios.put(`${URL}/${bici.id}/update`, update, {
+      
+      axios.put(`${URL}/${bici.code}/update`, update, {
           headers: headersR
         })
         .then(response => {
           expect(response.status).toBe(200);
-          Bicicleta.findById(bici.id).exec((err, biciBD) => {
+          Bicicleta.findById(bici.code).exec((err, biciBD) => {
             expect(biciBD.modelo).toBe(update.modelo)
             expect(biciBD.color).toBe(update.color)
             done();
@@ -100,20 +101,20 @@ describe('Test Bicicleta', () => {
         'content-type': 'application/json'
       };
       var aBici = {
-        "id": 10,
+        "code": 10,
         "color": "rojo",
         "modelo": "urbana"
       }
       Bicicleta.add(aBici);
-      axios.delete(`http://localhost:3000/api/bicicletas/${aBici.id}/delete`, {
+      axios.delete(`http://localhost:3000/api/bicicletas/${aBici.code}/delete`, {
           headers: headersR
         })
         .then(response => {
           expect(response.status).toBe(204);
           expect(() => {
-              Bicicleta.findById(aBici.id)
+              Bicicleta.findById(aBici.code)
             })
-            .toThrow(new Error(`No existe una bicicleta con el id ${aBici.id}`))
+            .toThrow(new Error(`No existe una bicicleta con el id ${aBici.code}`))
           done();
         })
     })
