@@ -1,3 +1,4 @@
+require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -23,7 +24,9 @@ app.use(session({
   secret:'redBicis,.aspq?124prsq*-//'
 }));
 var mongoose = require('mongoose');
-var mongoDB = 'mongodb://localhost/red_bicicletas';
+//var mongoDB = 'mongodb://localhost/red_bicicletas';
+var mongoDB = process.env.MONGO_URI;
+
 mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology:true});
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
@@ -137,7 +140,7 @@ function validarUsuario(req, res, next) {
 
 
 app.use('/', indexRouter);
-app.use('/usuarios',loggedIn, usuariosRouter);
+app.use('/usuarios', usuariosRouter);
 app.use('/token', tokenRouter);
 app.use('/bicicletas',loggedIn, bicisRouter);
 app.use('/api/bicicletas',validarUsuario, bicisApiRouter);

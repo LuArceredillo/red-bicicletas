@@ -15,7 +15,7 @@ exports.get_usuario = async function (req, res) {
 }
 
 exports.create_usuario = async function (req, res) {
-    let user = new Usuario({ name: req.body.name });
+    let user = new Usuario({ name: req.body.name, email:req.body.email, password:req.body.password });
     try {
         await user.save();
         return res.status(200).send(user)
