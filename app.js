@@ -146,6 +146,9 @@ app.use('/bicicletas',loggedIn, bicisRouter);
 app.use('/api/bicicletas',validarUsuario, bicisApiRouter);
 
 
+app.use('/privacy_policy', function(req, res){
+  res.sendFile(__dirname + '/public/privacy_policy.html');
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
