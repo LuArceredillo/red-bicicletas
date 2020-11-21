@@ -13,8 +13,26 @@ var bicisApiRouter = require('./routes/api/bicicletas');
 
 const passport = require('./config/passport');
 const session = require('express-session');
+const MongoDBStore = require('connect-mongodb-session')(session);
 
-const store = new session.MemoryStore;
+
+let store;
+if (process.env.NODE_ENV === 'development'){
+  store = new session.MemoryStore;
+}else{
+  store = new MongoDBStore({
+    uri: process.env.MONGO_URI,
+    collection: 'sessions'
+  });
+  store.on('error',function(error){
+    assert.ifError(error);
+    assert.ok(false);
+  });
+}
+
+
+
+
 var app = express();
 app.use(session({
   cookie: { maxAge:240*60*60*1000 },
@@ -23,6 +41,7 @@ app.use(session({
   resave: 'true',
   secret:'redBicis,.aspq?124prsq*-//'
 }));
+
 var mongoose = require('mongoose');
 //var mongoDB = 'mongodb://localhost/red_bicicletas';
 var mongoDB = process.env.MONGO_URI;
@@ -137,6 +156,23 @@ function validarUsuario(req, res, next) {
     }
   });
 };
+
+app.get('/auth/google',
+  passport.authenticate('google', { scope: [
+    'https://www.googleapis.com/auth/plus.login',
+    'https://www.googleapis.com/auth/plus.profile.emails.read'] }));
+
+app.get('/auth/google/callback', passport.authenticate('google', { 
+      successRedirect: '/',
+      failureRedirect: '/error'
+    })
+);
+
+
+
+
+
+
 
 
 app.use('/', indexRouter);
