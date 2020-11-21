@@ -40,5 +40,20 @@ passport.use(new GoogleStrategy({
 
 );
 
+passport.use(new FacebookTokenStrategy ({
+    clientID: process.env.FACEBOOK_ID,
+    clientSecret: process.env.FACEBOOK_SECRET
+}, function(accessToken, refreshToken, profile, done){
+    try {
+        User.findOneOrCreateByFacebook(profile, function (err, user) {
+            if (err) console.log('err' + err);
+            return done(err, user);
+        });
+    } catch(err2){
+        console.log(err2);
+        return done(err2, null);
+    }
+}
+));
 
 module.exports = passport;
